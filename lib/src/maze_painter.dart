@@ -26,6 +26,7 @@ enum Direction {
 class MazePainter extends ChangeNotifier implements CustomPainter {
   ///Default constructor
   MazePainter({
+    required this.context,
     required this.playerImage,
     this.checkpointsImages = const [],
     this.columns = 7,
@@ -52,6 +53,9 @@ class MazePainter extends ChangeNotifier implements CustomPainter {
 
     _createMaze();
   }
+
+  ///BuildContext
+  final BuildContext context;
 
   ///Images for checkpoints
   final List<ui.Image> checkpointsImages;
@@ -86,6 +90,7 @@ class MazePainter extends ChangeNotifier implements CustomPainter {
   late List<List<Cell>> _cells;
   late List<ui.Image> _checkpoints;
   late double _cellSize, _hMargin, _vMargin;
+  bool _finished = false;
 
   ///Paints for `exit`, `player` and `walls`
   final Paint _exitPaint = Paint();
@@ -171,43 +176,51 @@ class MazePainter extends ChangeNotifier implements CustomPainter {
       }
     }
 
-    if (_player.col == _exit.col && _player.row == _exit.row) {
+    if (_player.col == _exit.col && _player.row == _exit.row && !_finished) {
+      _finished = true;
       if (onFinish != null) {
         onFinish!();
       }
+      Future.delayed(
+        const Duration(milliseconds: 350),
+        () => Navigator.pop(context),
+      );
     }
   }
 
   ///This method is used to notify the user drag position change to the maze
   ///and perfom the movement
-  void updatePosition(Offset position) {
+  void updatePosition(Offset position, Direction? keyDirection) {
     _userX = position.dx;
     _userY = position.dy;
     notifyListeners();
+    if (keyDirection != null) {
+      movePlayer(keyDirection);
+    } else {
+      var playerCenterX = _hMargin + (_player.col + 0.5) * _cellSize;
+      var playerCenterY = _vMargin + (_player.row + 0.5) * _cellSize;
 
-    var playerCenterX = _hMargin + (_player.col + 0.5) * _cellSize;
-    var playerCenterY = _vMargin + (_player.row + 0.5) * _cellSize;
+      var dx = _userX - playerCenterX;
+      var dy = _userY - playerCenterY;
 
-    var dx = _userX - playerCenterX;
-    var dy = _userY - playerCenterY;
+      var absDx = dx.abs();
+      var absDy = dy.abs();
 
-    var absDx = dx.abs();
-    var absDy = dy.abs();
-
-    if (absDx > _cellSize || absDy > _cellSize) {
-      if (absDx > absDy) {
-        // X
-        if (dx > 0) {
-          movePlayer(Direction.right);
+      if (absDx > _cellSize || absDy > _cellSize) {
+        if (absDx > absDy) {
+          // X
+          if (dx > 0) {
+            movePlayer(Direction.right);
+          } else {
+            movePlayer(Direction.left);
+          }
         } else {
-          movePlayer(Direction.left);
-        }
-      } else {
-        // Y
-        if (dy > 0) {
-          movePlayer(Direction.down);
-        } else {
-          movePlayer(Direction.up);
+          // Y
+          if (dy > 0) {
+            movePlayer(Direction.down);
+          } else {
+            movePlayer(Direction.up);
+          }
         }
       }
     }

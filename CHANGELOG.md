@@ -1,3 +1,9 @@
+## [4.0.0] 
+Customized Version
+* Maze is now showed in a dialog
+* Desktop Support (Use the keyboard to control the player: WASD and/or Arrows)
+* Back button is intercepted
+
 ## [3.0.0]
 * Null safety support
 * Update dependencies

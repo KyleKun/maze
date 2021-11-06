@@ -1,8 +1,8 @@
 name: maze
 description: A simple maze game in Flutter. It also serves as a CustomPainter example.
-version: 3.0.0
-homepage: https://github.com/pblinux/maze
-repository: https://github.com/pblinux/maze
+version: 4.0.0
+homepage: https://github.com/KyleKun/maze
+repository: https://github.com/KyleKun/maze
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -13,6 +13,7 @@ dependencies:
   equatable: ^2.0.0
   http: ^0.13.0
   universal_io: ^2.0.0
+  back_button_interceptor: ^5.0.2
 
 dev_dependencies:
   flutter_test:
