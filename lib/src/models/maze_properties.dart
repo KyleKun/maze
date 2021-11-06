@@ -5,7 +5,7 @@ import '../../maze.dart';
 /// Maze Properties
 class MazeProperties {
   ///Default constructor
-  const MazeProperties({
+  MazeProperties({
     required this.context,
     required this.player,
     this.backgroundColor,
@@ -23,46 +23,46 @@ class MazeProperties {
   });
 
   ///BuildContext
-  final BuildContext context;
+  BuildContext context;
 
   ///Background color of the maze
-  final Color? backgroundColor;
+  Color? backgroundColor;
 
   ///List of checkpoints
-  final List<MazeItem> checkpoints;
+  List<MazeItem> checkpoints;
 
   ///Columns of the maze
-  final int columns;
+  int columns;
 
   ///The finish image
-  final MazeItem? finishImage;
+  MazeItem? finishImage;
 
   ///Height of the maze
-  final double? height;
+  double? height;
 
   ///A widget to show while loading all
-  final Widget? loadingWidget;
+  Widget? loadingWidget;
 
   ///Callback when the player pass through a checkpoint
-  final Function(int)? onCheckpoint;
+  Function(int)? onCheckpoint;
 
   ///Callback when the player reach finish
-  final Function()? onFinish;
+  Function()? onFinish;
 
   ///The main player
-  final MazeItem player;
+  MazeItem player;
 
   ///Rows of the maze
-  final int rows;
+  int rows;
 
   ///Wall color
-  final Color? wallColor;
+  Color? wallColor;
 
   ///Wall thickness
   ///
   ///Default: 3.0
-  final double? wallThickness;
+  double? wallThickness;
 
   ///Width of the maze
-  final double? width;
+  double? width;
 }
